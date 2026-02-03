@@ -4,7 +4,7 @@
 
 Week 1-2 Deliverable: Core Environment + Baseline Schedulers
 
----
+
 
 ## Project Overview
 
@@ -16,7 +16,7 @@ This project implements a Multi-Agent Reinforcement Learning system for optimizi
 - **Maintain safety** through hard constraint enforcement
 - **Optimize multi-objective** tradeoffs (delay, energy, safety)
 
----
+
 
 ## What's in This Prototype
 
@@ -46,7 +46,7 @@ This project implements a Multi-Agent Reinforcement Learning system for optimizi
    - Baseline comparison
    - Visualization generation
 
----
+
 
 ## Architecture
 
@@ -82,7 +82,7 @@ reward = throughput_bonus          # +100 for successful landing
        + energy_penalty            # -0.1 × hold_energy
 ```
 
----
+
 
 ## Quick Start
 
@@ -115,7 +115,6 @@ python baselines.py
 python visualization.py
 ```
 
----
 
 ## Expected Results
 
@@ -133,7 +132,7 @@ python visualization.py
 - **~12% throughput increase** from smarter pad assignment
 - **~8% utilization gain** via nearest-pad selection
 
----
+
 
 ## Technical Details
 
@@ -180,7 +179,7 @@ priority_score = battery_urgency × 100
 4. Hold if no valid assignment
 ```
 
----
+
 
 ## Next Steps (Week 3-4)
 
@@ -200,7 +199,7 @@ priority_score = battery_urgency × 100
 - [ ] Measure sample efficiency
 - [ ] Test on 10, 15, 20 arrivals/hour
 
----
+
 
 ## Requirements
 
@@ -220,7 +219,7 @@ torch >= 2.0
 torch-geometric >= 2.4
 ```
 
----
+
 
 ## File Structure
 
@@ -236,7 +235,7 @@ marl_vertiport/
     └── demo_visualization.png
 ```
 
----
+
 
 ## Educational Value
 
@@ -254,7 +253,7 @@ marl_vertiport/
 - Multi-objective reward balancing
 - Curriculum learning readiness (density scaling)
 
----
+
 
 ## References
 
@@ -269,7 +268,7 @@ Academic foundations:
 - Govindan et al. (2024): Throughput Maximizing eVTOL Scheduling
 - Lowe et al. (2017): Multi-Agent Actor-Critic (QMIX foundations)
 
----
+
 
 ## Week 1-2 Deliverables - COMPLETE
 
@@ -281,7 +280,7 @@ Academic foundations:
 - [x] Comprehensive documentation
 - [x] Reproducible demo script
 
----
+
 
 ## Success Criteria Met
 
@@ -294,7 +293,7 @@ Academic foundations:
 | Documentation complete | Completed | README, inline comments, docstrings |
 | Reproducible | Completed | Single `demo.py` runs all components |
 
----
+
 
 ## Design Highlights
 
@@ -321,7 +320,6 @@ Academic foundations:
    - Environment agnostic to scheduler type
    - Visualization decoupled from training
 
----
 
 ## Known Limitations
 
