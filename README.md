@@ -6,7 +6,7 @@ Week 1-2 Deliverable: Core Environment + Baseline Schedulers
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 This project implements a Multi-Agent Reinforcement Learning system for optimizing eVTOL (electric Vertical Take-Off and Landing) aircraft landing scheduling at urban vertiports. The system addresses the critical bottleneck in Urban Air Mobility (UAM) networks where limited landing pads (4-16 per facility) must serve high volumes of aircraft while maintaining strict safety constraints.
 
@@ -18,9 +18,9 @@ This project implements a Multi-Agent Reinforcement Learning system for optimizi
 
 ---
 
-## 📦 What's in This Prototype
+## What's in This Prototype
 
-### ✅ Core Components
+### Core Components
 
 1. **`vertiport_env.py`** - Multi-Agent Vertiport Environment
    - Graph-based state representation
@@ -48,7 +48,7 @@ This project implements a Multi-Agent Reinforcement Learning system for optimizi
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### State Space (per aircraft)
 ```
@@ -84,11 +84,11 @@ reward = throughput_bonus          # +100 for successful landing
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Run the Demo
 ```bash
-cd /home/claude/marl_vertiport
+cd marl
 python3 demo.py
 ```
 
@@ -102,22 +102,22 @@ This will:
 
 **Test environment only:**
 ```bash
-python3 vertiport_env.py
+python vertiport_env.py
 ```
 
 **Compare baselines:**
 ```bash
-python3 baselines.py
+python baselines.py
 ```
 
 **Generate visualization:**
 ```bash
-python3 visualization.py
+python visualization.py
 ```
 
 ---
 
-## 📊 Expected Results
+## Expected Results
 
 ### Baseline Performance (20 aircraft/hour)
 
@@ -129,13 +129,13 @@ python3 visualization.py
 | Separation Violations | 1-2 per 100 | 0-1 per 100 | **0 (hard constraint)** |
 
 ### Greedy vs FCFS Improvements
-- ✅ **~25% delay reduction** through battery-aware prioritization
-- ✅ **~12% throughput increase** from smarter pad assignment
-- ✅ **~8% utilization gain** via nearest-pad selection
+- **~25% delay reduction** through battery-aware prioritization
+- **~12% throughput increase** from smarter pad assignment
+- **~8% utilization gain** via nearest-pad selection
 
 ---
 
-## 🔬 Technical Details
+## Technical Details
 
 ### Environment Features
 
@@ -182,7 +182,7 @@ priority_score = battery_urgency × 100
 
 ---
 
-## 📈 Next Steps (Week 3-4)
+## Next Steps (Week 3-4)
 
 ### Independent PPO Training
 - [ ] Implement PPO agents using stable baselines
@@ -202,7 +202,7 @@ priority_score = battery_urgency × 100
 
 ---
 
-## 🔧 Requirements
+## Requirements
 
 ### Core Dependencies
 ```
@@ -222,7 +222,7 @@ torch-geometric >= 2.4
 
 ---
 
-## 📁 File Structure
+## File Structure
 
 ```
 marl_vertiport/
@@ -238,7 +238,7 @@ marl_vertiport/
 
 ---
 
-## 🎓 Educational Value
+## Educational Value
 
 ### Skills Demonstrated
 1. **Multi-Agent Systems**: Decentralized decision-making with coordination
@@ -248,15 +248,15 @@ marl_vertiport/
 5. **Domain Modeling**: Aviation operations, vertiport constraints
 
 ### Key Concepts Implemented
-- ✅ Graph-based state representation
-- ✅ Action masking for safety
-- ✅ Heterogeneous agent properties
-- ✅ Multi-objective reward balancing
-- ✅ Curriculum learning readiness (density scaling)
+- Graph-based state representation
+- Action masking for safety
+- Heterogeneous agent properties
+- Multi-objective reward balancing
+- Curriculum learning readiness (density scaling)
 
 ---
 
-## 📚 References
+## References
 
 Based on research proposal aligning with:
 - FAA AC 150/5390-2D (Vertiport Design Standards)
@@ -271,7 +271,7 @@ Academic foundations:
 
 ---
 
-## ✅ Week 1-2 Deliverables - COMPLETE
+## Week 1-2 Deliverables - COMPLETE
 
 - [x] VertiportEnv implementation with graph-based state
 - [x] FCFS baseline scheduler
@@ -283,20 +283,20 @@ Academic foundations:
 
 ---
 
-## 🎯 Success Criteria Met
+## Success Criteria Met
 
 | Criterion | Status | Evidence |
 |-----------|--------|----------|
-| Environment functional | ✅ | Multi-agent environment with 8 pads, Poisson arrivals |
-| Baselines implemented | ✅ | FCFS and Greedy schedulers operational |
-| Metrics tracked | ✅ | Delay, throughput, utilization, violations |
-| Visualization working | ✅ | Real-time dashboard with 4 panels |
-| Documentation complete | ✅ | README, inline comments, docstrings |
-| Reproducible | ✅ | Single `demo.py` runs all components |
+| Environment functional | Completed | Multi-agent environment with 8 pads, Poisson arrivals |
+| Baselines implemented | Completed | FCFS and Greedy schedulers operational |
+| Metrics tracked | Completed | Delay, throughput, utilization, violations |
+| Visualization working | Completed | Real-time dashboard with 4 panels |
+| Documentation complete | Completed | README, inline comments, docstrings |
+| Reproducible | Completed | Single `demo.py` runs all components |
 
 ---
 
-## 💡 Design Highlights
+## Design Highlights
 
 ### Why This Architecture?
 
@@ -323,7 +323,7 @@ Academic foundations:
 
 ---
 
-## 🚨 Known Limitations
+## Known Limitations
 
 1. **No wind dynamics yet** - Will add in Week 7 robustness testing
 2. **Simplified kinematics** - Constant velocity, no complex flight dynamics  
@@ -331,24 +331,4 @@ Academic foundations:
 4. **No communication delays** - Added in perturbation testing
 5. **Deterministic separation** - Future: probabilistic collision modeling
 
-These are intentional simplifications for the prototype phase and will be addressed in subsequent weeks.
 
----
-
-## 🤝 Alignment with Proposal
-
-This prototype directly implements the Week 1-2 milestones from the research proposal:
-
-✅ **Implement VertiportEnv in Gymnasium** (custom environment)  
-✅ **Code FCFS and greedy heuristic baselines**  
-✅ **Benchmark at 10, 20, 30 arrivals/hour**  
-✅ **Validation against design standards** (separation, pad config)
-
-Ready to proceed to Week 3-4: Independent PPO training! 🚀
-
----
-
-**Author**: MARL Vertiport Scheduling Project  
-**Date**: February 2026  
-**Version**: 1.0 (Prototype)  
-**Status**: Week 1-2 Deliverables Complete ✅
