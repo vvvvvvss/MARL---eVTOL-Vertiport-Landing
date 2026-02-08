@@ -1,10 +1,6 @@
-# MARL eVTOL Vertiport Scheduling - Prototype
+# MARL eVTOL Vertiport Scheduling 
 
 **Multi-Agent Reinforcement Learning for Safe eVTOL Vertiport Landing Scheduling**
-
-Week 1-2 Deliverable: Core Environment + Baseline Schedulers
-
-
 
 ## Project Overview
 
