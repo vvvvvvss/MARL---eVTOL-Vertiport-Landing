@@ -6,7 +6,7 @@ This script:
 1. Creates and trains a PPO agent on the vertiport scheduling problem
 2. Saves checkpoints during training
 3. Logs metrics to TensorBoard and CSV
-4. Evaluates performance periodically
+4. Evaluates performance periodically 
 """
 
 import os

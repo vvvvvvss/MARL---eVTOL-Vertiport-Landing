@@ -1,0 +1,12 @@
+{
+  "model_name": "evtol_comm_gcn_comm+gcn_20.0ac_per_hr_20260301_115847",
+  "total_timesteps": 50000,
+  "arrival_rate": 20.0,
+  "communication_enabled": true,
+  "gcn_enabled": true,
+  "learning_rate": 0.0003,
+  "n_steps": 2048,
+  "batch_size": 64,
+  "timestamp": "20260301_115847",
+  "log_dir": "evtol_training\\evtol_comm_gcn_comm+gcn_20.0ac_per_hr_20260301_115847"
+}
