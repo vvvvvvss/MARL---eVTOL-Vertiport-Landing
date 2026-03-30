@@ -1,20 +1,11 @@
 #!/usr/bin/env python3
 """
 gradio_dashboard.py - MARL eVTOL Vertiport Scheduling System - Interactive Dashboard
-
-Install requirements:
-    pip install gradio matplotlib numpy pandas
-
-Run with:
-    python gradio_dashboard.py
-
-Then open: http://localhost:7860
 """
 
 import sys
 import types
 
-# Stubs for removed stdlib modules (Python 3.13+)
 for _mod in ("audioop", "pyaudioop"):
     sys.modules.setdefault(_mod, types.ModuleType(_mod))
 
@@ -26,11 +17,6 @@ import matplotlib.patches as patches
 import numpy as np
 from datetime import datetime
 from typing import Dict
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# THEME CONSTANTS  (white / light theme)
-# ─────────────────────────────────────────────────────────────────────────────
 
 BG_PAGE  = "#ffffff"
 BG_PANEL = "#f8f9fc"
@@ -75,10 +61,6 @@ IMPROVEMENTS = {
 BASE = dict(delay=18.5, throughput=26, violations=2.5, util=65)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# MATPLOTLIB HELPERS
-# ─────────────────────────────────────────────────────────────────────────────
-
 def _light_fig(w=14, h=8, rows=1, cols=1, dpi=110):
     fig, axes = plt.subplots(rows, cols, figsize=(w, h), dpi=dpi)
     fig.patch.set_facecolor(BG_PAGE)
@@ -103,10 +85,6 @@ def _grid(ax, alpha=0.5):
 def _label(ax, text, fontsize=11, color=C_TITLE):
     ax.set_title(text, fontsize=fontsize, fontweight="bold", color=color, pad=10)
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# VERTIPORT VISUALIZER
-# ─────────────────────────────────────────────────────────────────────────────
 
 NUM_PADS       = 8
 PAD_RADIUS     = 380
@@ -157,26 +135,22 @@ def plot_vertiport(arrival_rate, num_aircraft):
     ax.set_aspect("equal")
     ax.axis("off")
 
-    # Outer boundary
     ax.add_patch(patches.Circle((0, 0), 2000, fill=False,
                                 edgecolor=C_BLUE, linewidth=2, alpha=0.35))
     ax.add_patch(patches.Circle((0, 0), 2000, facecolor=C_BLUE,
                                 edgecolor="none", alpha=0.03))
 
-    # Approach rings
     for dist, color, label in zip(APPROACH_RINGS, RING_COLORS, RING_LABELS):
         ax.add_patch(patches.Circle((0, 0), dist, fill=False, edgecolor=color,
                                     linewidth=1.2, linestyle="--", alpha=0.45))
         ax.text(dist * 0.707 + 30, dist * 0.707 + 30, label,
                 fontsize=7, color=color, alpha=0.75, fontweight="bold")
 
-    # Compass lines
     for ang in range(0, 360, 45):
         ex = 2000 * np.cos(np.radians(ang))
         ey = 2000 * np.sin(np.radians(ang))
         ax.plot([0, ex], [0, ey], color=C_BORDER, linewidth=0.6)
 
-    # Landing pads
     pad_size = 90
     for i in range(NUM_PADS):
         ang   = (i / NUM_PADS) * 2 * np.pi
@@ -198,14 +172,12 @@ def plot_vertiport(arrival_rate, num_aircraft):
         ax.text(px, py - 16, "▬",    ha="center", va="center",
                 fontsize=7, color=color, alpha=0.55)
 
-    # Central helipad
     ax.add_patch(patches.Circle((0, 0), 58, facecolor=BG_CARD,
                                 edgecolor=C_GREEN, linewidth=2.5))
     ax.add_patch(patches.Circle((0, 0), 36, facecolor=C_GREEN, alpha=0.15))
     ax.text(0, 0, "H", ha="center", va="center",
             fontsize=13, fontweight="bold", color=C_GREEN)
 
-    # Aircraft
     for ac in data["aircraft"]:
         x, y     = ac["x"], ac["y"]
         color    = STATUS_COLORS.get(ac["status"], C_TEXT)
@@ -220,7 +192,6 @@ def plot_vertiport(arrival_rate, num_aircraft):
             ax.text(x, y - 100, f"#{ac['id']}", ha="center", fontsize=6.5,
                     color=color, fontweight="bold", alpha=0.9, zorder=6)
 
-    # Legend
     lx, ly = -2280, -1650
     ax.text(lx, ly + 130, "STATUS", fontsize=8, color=C_MUTED, fontweight="bold")
     for j, (label, color) in enumerate(STATUS_COLORS.items()):
@@ -228,7 +199,6 @@ def plot_vertiport(arrival_rate, num_aircraft):
         ax.text(lx + 55, ly - j * 135, label.capitalize(),
                 fontsize=8, color=color, va="center", fontweight="bold")
 
-    # Title
     title = (f"ARRIVAL  {data['rate']:.0f} ac/hr"
              f"    ·    TOTAL {len(data['aircraft'])}"
              f"    ·    APPROACH {data['n_approach']}"
@@ -240,10 +210,6 @@ def plot_vertiport(arrival_rate, num_aircraft):
     plt.tight_layout(pad=0.5)
     return fig
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# METRICS DASHBOARD
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _get_metrics(rate, policy):
     imp = IMPROVEMENTS[policy]
@@ -281,7 +247,6 @@ def plot_metrics(arrival_rate, policy):
     fig = plt.figure(figsize=(15, 9), dpi=110)
     fig.patch.set_facecolor(BG_PAGE)
 
-    # Header strip
     ax_hdr = fig.add_axes([0.0, 0.88, 1.0, 0.12])
     ax_hdr.set_facecolor(BG_CARD)
     ax_hdr.axis("off")
@@ -300,7 +265,6 @@ def plot_metrics(arrival_rate, policy):
                 color=C_GREEN, va="center", ha="right",
                 transform=ax_hdr.transAxes)
 
-    # KPI bars
     kpi_defs = [
         ("Avg Landing Delay",   m["delay"],      20,  C_RED,    "min"),
         ("Aircraft Throughput", m["throughput"], 60,  C_GREEN,  "ac/hr"),
@@ -313,7 +277,6 @@ def plot_metrics(arrival_rate, policy):
         ax  = fig.add_axes([0.03, top, 0.43, row_h])
         _kpi_bar(ax, val, vmax, color, title, unit)
 
-    # Donut – safety
     ax_donut = fig.add_axes([0.52, 0.48, 0.22, 0.38])
     ax_donut.set_facecolor(BG_PAGE)
     safe      = m["violations"] == 0
@@ -332,7 +295,6 @@ def plot_metrics(arrival_rate, policy):
                   fontsize=8, color=C_MUTED)
     ax_donut.set_title("Violations", fontsize=9, color=C_TITLE, pad=6)
 
-    # Radar – policy comparison
     categories = ["Delay\nReduction", "Throughput\nGain", "Util\nGain", "Efficiency"]
     N      = len(categories)
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
@@ -368,7 +330,6 @@ def plot_metrics(arrival_rate, policy):
         ax_radar.plot(angles, vals, color=color, linewidth=lw, alpha=0.95)
         ax_radar.fill(angles, vals, color=color, alpha=alpha_fill)
 
-    # Comparison table
     ax_tbl = fig.add_axes([0.52, 0.06, 0.45, 0.38])
     ax_tbl.set_facecolor(BG_PAGE)
     ax_tbl.axis("off")
@@ -408,7 +369,6 @@ def plot_metrics(arrival_rate, policy):
                         fontweight="bold" if is_active else "normal",
                         va="center")
 
-    # Bottom KPI cards
     card_defs = [
         (f"{m['delay']:.1f} min",    "Avg Delay",  C_RED),
         (f"{m['throughput']:.0f}/hr", "Throughput", C_GREEN),
@@ -431,10 +391,6 @@ def plot_metrics(arrival_rate, policy):
     return fig
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TRAINING CURVES
-# ─────────────────────────────────────────────────────────────────────────────
-
 def _gen_training(n=800):
     rng   = np.random.default_rng(42)
     steps = np.linspace(0, n, n)
@@ -454,7 +410,6 @@ def plot_training():
     fig, axes = _light_fig(15, 7, rows=1, cols=2, dpi=110)
     fig.subplots_adjust(wspace=0.32, left=0.06, right=0.97, top=0.88, bottom=0.12)
 
-    # Panel 1: smoothed curves
     ax = axes[0]
     _label(ax, "Training Reward: Delay Reduction Over Steps")
     _grid(ax)
@@ -475,7 +430,6 @@ def plot_training():
               facecolor=BG_PAGE, edgecolor=C_BORDER, labelcolor=C_TEXT)
     ax.set_ylim(-20, 0)
 
-    # Panel 2: final performance
     ax2 = axes[1]
     _label(ax2, "Final Performance  (lower delay = better)")
     _grid(ax2, alpha=0.4)
@@ -512,10 +466,6 @@ def plot_training():
 
     return fig
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# REPORT GENERATOR
-# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_report(arrival_rate, policy, num_aircraft):
     m   = _get_metrics(float(arrival_rate), policy)
@@ -581,19 +531,28 @@ def generate_report(arrival_rate, policy, num_aircraft):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# CSS  (white / light theme)
+# CSS  — ONLY COLOR CHANGES vs original:
+#   • body / .gradio-container forced to white bg + dark text (was same, now
+#     also sets color: #1a1f36 explicitly)
+#   • .app-header forced white bg + white text override removed — now uses
+#     explicit dark colours so they show on any Gradio theme shell
+#   • .app-title color changed from #1a1f36 to #1a1f36 with !important added
+#   • .app-subtitle color set to #5a6380 (was #8892b0, too light on dark shell)
+#   • Tab nav buttons: inactive color #4a5568 (was #8892b0), active #2563eb
+#   • Tab nav background: #f0f4ff (was #f8f9fc)
+#   • .section-label color: #5a6380 (was #8892b0)
 # ─────────────────────────────────────────────────────────────────────────────
 
 CSS = """
-body, .gradio-container {
-    background: #ffffff !important;
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    color: #1a1f36;
-}
+/* ── Force white background & dark text on the entire shell ── */
+body,
+.gradio-container,
+.gradio-container > *,
+footer { background: #ffffff !important; color: #1a1f36 !important; }
 
 /* Header */
 .app-header {
-    background: #ffffff;
+    background: #ffffff !important;
     border-bottom: 2px solid #e5e9f5;
     padding: 18px 28px 14px;
     display: flex;
@@ -603,22 +562,24 @@ body, .gradio-container {
 .app-title {
     font-size: 20px;
     font-weight: 700;
-    color: #1a1f36;
+    color: #1a1f36 !important;          /* CHANGED: added !important */
     margin: 0;
     letter-spacing: -0.01em;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 .app-subtitle {
     font-size: 11px;
-    color: #8892b0;
+    color: #5a6380 !important;          /* CHANGED: darker than #8892b0 */
     margin: 3px 0 0;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 .status-badge {
     display: inline-block;
     background: #dcfce7;
     border: 1px solid #16a34a;
-    color: #16a34a;
+    color: #16a34a !important;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -630,12 +591,12 @@ body, .gradio-container {
 
 /* Tabs */
 .tabs > .tab-nav {
-    background: #f8f9fc !important;
-    border-bottom: 1px solid #e5e9f5 !important;
+    background: #f0f4ff !important;     /* CHANGED: slightly bluer, more visible */
+    border-bottom: 1px solid #d1d9f0 !important;
     padding: 0 16px !important;
 }
 .tabs > .tab-nav > button {
-    color: #8892b0 !important;
+    color: #4a5568 !important;          /* CHANGED: darker than #8892b0 */
     font-size: 11px !important;
     font-weight: 600 !important;
     letter-spacing: 0.06em !important;
@@ -659,7 +620,7 @@ body, .gradio-container {
 }
 
 /* Controls */
-.gr-slider { background: #ffffff !important;}
+.gr-slider { background: #ffffff !important; }
 .gr-slider input[type=range] { accent-color: #2563eb; }
 .gr-slider label, .gr-radio label, .gr-label {
     color: #3d4466 !important;
@@ -668,8 +629,7 @@ body, .gradio-container {
     letter-spacing: 0.04em !important;
     text-transform: uppercase !important;
 }
-.gr-slider > div {background: #ffffff !important;}
-
+.gr-slider > div { background: #ffffff !important; }
 .gr-radio span { color: #1a1f36 !important; font-size: 12px !important; }
 
 /* Button */
@@ -702,7 +662,7 @@ body, .gradio-container {
 .section-label {
     font-size: 10px;
     font-weight: 700;
-    color: #8892b0;
+    color: #5a6380 !important;          /* CHANGED: darker than #8892b0 */
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin: 0 0 10px;
@@ -761,10 +721,6 @@ body, .gradio-container {
 """
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# GRADIO INTERFACE
-# ─────────────────────────────────────────────────────────────────────────────
-
 def build_dashboard():
     def _update_vertiport(rate, n):
         return plot_vertiport(rate, n)
@@ -782,7 +738,6 @@ def build_dashboard():
 
     with gr.Blocks(css=CSS, title="MARL eVTOL Dashboard") as app:
 
-        # Header
         gr.HTML("""
         <div class="app-header">
             <span style="font-size:28px; line-height:1;">✈</span>
@@ -802,7 +757,6 @@ def build_dashboard():
 
         with gr.Tabs():
 
-            # TAB 1 – Vertiport
             with gr.Tab("Vertiport Operations"):
                 with gr.Row(equal_height=False):
                     with gr.Column(scale=1, min_width=260):
@@ -834,7 +788,6 @@ def build_dashboard():
                 app.load(_update_vertiport,
                          inputs=[arr_slider, n_slider], outputs=vp_plot)
 
-            # TAB 2 – Metrics
             with gr.Tab("Live Metrics"):
                 with gr.Row(equal_height=False):
                     with gr.Column(scale=1, min_width=260):
@@ -849,7 +802,7 @@ def build_dashboard():
                         metrics_plot = gr.Plot(show_label=False)
 
                 metrics_text = gr.Textbox(label="Metrics Summary", lines=18,
-                                          interactive=False, show_copy_button=True)
+                                          interactive=False)
 
                 metrics_btn.click(_update_metrics,
                                   inputs=[arr_metrics, policy_radio],
@@ -864,7 +817,6 @@ def build_dashboard():
                          inputs=[arr_metrics, policy_radio],
                          outputs=[metrics_plot, metrics_text])
 
-            # TAB 3 – Training
             with gr.Tab("Training & Comparison"):
                 training_plot = gr.Plot(show_label=False)
                 gr.HTML("""
@@ -885,7 +837,6 @@ def build_dashboard():
                 """)
                 app.load(_get_training, outputs=training_plot)
 
-            # TAB 4 – Report
             with gr.Tab("Performance Report"):
                 with gr.Row(equal_height=False):
                     with gr.Column(scale=1, min_width=260):
@@ -900,14 +851,12 @@ def build_dashboard():
                         gen_btn    = gr.Button("Generate Report", variant="primary")
                     with gr.Column(scale=2):
                         report_box = gr.Textbox(label="System Report", lines=30,
-                                                interactive=False,
-                                                show_copy_button=True)
+                                                interactive=False)
 
                 gen_btn.click(_update_report,
                               inputs=[rep_arr, rep_policy, rep_n],
                               outputs=report_box)
 
-            # TAB 5 – System Info
             with gr.Tab("System Info"):
                 gr.HTML(f"""
                 <div style="padding: 20px 6px;">
@@ -972,10 +921,6 @@ def build_dashboard():
 
     return app
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# ENTRY POINT
-# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print("\n" + "=" * 70)
