@@ -985,10 +985,4 @@ if __name__ == "__main__":
     app = build_dashboard()
     print("  ✓ Dashboard ready")
     print("\n  Open: http://localhost:7860\n")
-    app.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        share=False,
-        show_error=True,
-        debug=False,
-    )
+    app.launch()
